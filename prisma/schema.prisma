@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  name      String?
+  role      String   @default("admin")
+  createdAt DateTime @default(now())
+}
+
+model Project {
+  id          Int      @id @default(autoincrement())
+  title       String
+  client      String
+  amount      String?
+  date        String?
+  type        String   @default("房建")
+  images      String   @default("[]")
+  description String?
+  sort        Int      @default(0)
+  featured    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
+
+model Article {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String
+  cover     String?
+  published Boolean  @default(true)
+  featured  Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Message {
+  id        Int      @id @default(autoincrement())
+  name      String
+  phone     String?
+  email     String?
+  content   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model SiteConfig {
+  id    Int    @id @default(autoincrement())
+  key   String @unique
+  value String
+}
